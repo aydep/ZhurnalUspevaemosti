@@ -27,39 +27,30 @@ namespace ZhurnalUspevaemosti
             InitializeComponent();
         }
 
-        private void Button_Registr_Click(object sender, RoutedEventArgs e)
+        private void button_Sign_Click(object sender, RoutedEventArgs e)
         {
             string login = loginTextBox.Text.Trim(); //Корректировка введеных данных
-            string pass_1 = passwordBox1.Password.Trim();
-            string pass_2 = passwordBox2.Password.Trim();
-            string email = emailTextBox.Text.ToLower().ToLower();
+            string pass = passwordBox.Password.Trim();
 
-            loginTextBox.ToolTip = ""; //Очистка непраильных полей
+            roleBox.ToolTip = ""; //Очистка непраильных полей
+            roleBox.Background = Brushes.Transparent;
+            loginTextBox.ToolTip = "";
             loginTextBox.Background = Brushes.Transparent;
-            passwordBox1.ToolTip = "";
-            passwordBox1.Background = Brushes.Transparent;
-            passwordBox2.ToolTip = "";
-            passwordBox2.Background = Brushes.Transparent;
-            emailTextBox.ToolTip = "";
-            emailTextBox.Background = Brushes.Transparent;
+            passwordBox.ToolTip = "";
+            passwordBox.Background = Brushes.Transparent;
 
-
-            if (login.Length < 5) //Проверки корректности данных
+            if (roleBox.Text == "") //Проверка корректности данных
+            {
+                roleBox.ToolTip = "Выберите роль";
+                roleBox.Background = Brushes.IndianRed;
+            } else if (login.Length < 5)
             {
                 loginTextBox.ToolTip = "Слишком коротко";
                 loginTextBox.Background = Brushes.IndianRed;
-            } else if(pass_1.Length < 6) 
+            } else if(pass.Length < 6) 
             {
-                passwordBox1.ToolTip = "Слишком коротко";
-                passwordBox1.Background = Brushes.IndianRed;
-            } else if(pass_1 != pass_2)
-            {   
-                passwordBox2.ToolTip = "Пароли не одинаковы";
-                passwordBox2.Background = Brushes.IndianRed;
-            } else if(email.Length < 5 || !email.Contains("@") || !email.Contains("."))
-            {   
-                emailTextBox.ToolTip = "Не корректно";
-                emailTextBox.Background = Brushes.IndianRed;
+                passwordBox.ToolTip = "Слишком коротко";
+                passwordBox.Background = Brushes.IndianRed;
             } else {
                 DB db = new DB(); //Назначение локальной таблицы и адаптера 
 
@@ -67,15 +58,37 @@ namespace ZhurnalUspevaemosti
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                //MySqlCommand command = new MySqlCommand("SELECT * FROM users WHERE `login` = @uL AND `password` = @uP", db.getConnection());
+                MySqlCommand command = new MySqlCommand("SELECT * FROM users WHERE `login` = @uL AND `password` = @uP AND `role`=@uR", db.getConnection());
+                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
+                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass;
+                command.Parameters.Add("@uR", MySqlDbType.VarChar).Value = roleBox.Text;
+
+                db.openConnection();//Открытие подключения к БД
+
+                adapter.SelectCommand = command;
+                adapter.Fill(table);
+
+                if (table.Rows.Count > 0)
+                {
+                    this.Close();
+                    MessageBox.Show("Yes");
+                }
+                else
+                {
+                    MessageBox.Show("No");
+
+                }
+
+                db.closeConnection();//Закрытие подключения к БД
+
+
+                //MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
                 //command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
                 //command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass_1;
-                ////command.Parameters.Add("@uE", MySqlDbType.VarChar).Value = email;
+                //command.Parameters.Add("@uE", MySqlDbType.VarChar).Value = email;
 
-                //adapter.SelectCommand = command;
-                //adapter.Fill(table);
 
-                //if (table.Rows.Count > 0)
+                //if (command.ExecuteNonQuery() == 1)
                 //{
                 //    MessageBox.Show("Yes");
                 //}
@@ -84,23 +97,6 @@ namespace ZhurnalUspevaemosti
                 //    MessageBox.Show("No");
                 //}
 
-                MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
-                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
-                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass_1;
-                command.Parameters.Add("@uE", MySqlDbType.VarChar).Value = email;
-
-                db.openConnection();//Открытие подключения к БД
-
-                if (command.ExecuteNonQuery() == 1)
-                {
-                    MessageBox.Show("Yes");
-                }
-                else
-                {
-                    MessageBox.Show("No");
-                }
-
-                db.closeConnection();//Закрытие подключения к БД
             }
         }
 

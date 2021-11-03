@@ -29,8 +29,8 @@ namespace ZhurnalUspevaemosti
 
         private void button_Sign_Click(object sender, RoutedEventArgs e)
         {
-            string login = loginTextBox.Text.Trim(); //Корректировка введеных данных
-            string pass = passwordBox.Password.Trim();
+            string Login = loginTextBox.Text.Trim(); //Корректировка введеных данных
+            string Pass = passwordBox.Password.Trim();
 
             roleBox.ToolTip = ""; //Очистка непраильных полей
             roleBox.Background = Brushes.Transparent;
@@ -43,35 +43,61 @@ namespace ZhurnalUspevaemosti
             {
                 roleBox.ToolTip = "Выберите роль";
                 roleBox.Background = Brushes.IndianRed;
-            } else if (login.Length < 5)
+            } else if (Login.Length < 5)
             {
                 loginTextBox.ToolTip = "Слишком коротко";
                 loginTextBox.Background = Brushes.IndianRed;
-            } else if(pass.Length < 6) 
+            } else if(Pass.Length < 6) 
             {
                 passwordBox.ToolTip = "Слишком коротко";
                 passwordBox.Background = Brushes.IndianRed;
             } else {
                 DB db = new DB(); //Назначение локальной таблицы и адаптера 
 
-                DataTable table = new DataTable();
+                DataTable Table = new DataTable();
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-                MySqlCommand command = new MySqlCommand("SELECT * FROM users WHERE `login` = @uL AND `password` = @uP AND `role`=@uR", db.getConnection());
-                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
-                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass;
-                command.Parameters.Add("@uR", MySqlDbType.VarChar).Value = roleBox.Text;
+                switch (roleBox.Text) //Назначение роли
+                {
+                    case "Ученик":
+                        currentUser.Role = "Students";
+                        break;
+
+                    case "Учитель":
+                        currentUser.Role = "Teachers";
+                        break;
+
+                    case "Администратор":
+                        currentUser.Role = "Admins";
+                        break;
+
+                    default:
+                        MessageBox.Show("Не выбрана роль");
+                        break;
+                }
+
+                //Формирование запоса
+                MySqlCommand command = new MySqlCommand($"SELECT * FROM ayder2s4_zhurnal.{currentUser.Role} WHERE `login` = @uL AND `password` = @uP", db.getConnection());
+                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;
+                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = Pass;
+
+                
 
                 db.openConnection();//Открытие подключения к БД
-
+                MessageBox.Show(roleBox.Text);
                 adapter.SelectCommand = command;
-                adapter.Fill(table);
+                adapter.Fill(Table);
 
-                if (table.Rows.Count > 0)
+                if (Table.Rows.Count > 0) //Передача данных в класс curentUser и открытие основного окна
                 {
+                    currentUser.Name = Table.Rows[0][2].ToString();
+                    currentUser.Surename = Table.Rows[0][3].ToString();
+                    currentUser.Id = int.Parse(Table.Rows[0][0].ToString());
+                    currentUser.ClassId = int.Parse(Table.Rows[0][1].ToString());
+
                     this.Close();
-                    MessageBox.Show("Yes");
+                    MessageBox.Show("Yes " + currentUser.Name + " " + currentUser.Surename + " " + currentUser.Role + " " + currentUser.Id);
                 }
                 else
                 {
@@ -82,8 +108,8 @@ namespace ZhurnalUspevaemosti
                 db.closeConnection();//Закрытие подключения к БД
 
 
-                //MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
-                //command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = login;
+                //MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `Login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
+                //command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;
                 //command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass_1;
                 //command.Parameters.Add("@uE", MySqlDbType.VarChar).Value = email;
 
@@ -100,9 +126,5 @@ namespace ZhurnalUspevaemosti
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

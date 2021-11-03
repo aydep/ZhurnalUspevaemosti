@@ -9,24 +9,24 @@ namespace ZhurnalUspevaemosti
 {
     class DB
     {
-        MySqlConnection connection = new MySqlConnection("Server=ayder2s4.beget.tech;Port=3306;Database=ayder2s4_zhurnal;User Id=ayder2s4_zhurnal;Password=Onm5b-1ju; database=ayder2s4_zhurnal");
+        MySqlConnection Connection = new MySqlConnection("Server=ayder2s4.beget.tech;Port=3306;Database=ayder2s4_zhurnal;User Id=ayder2s4_zhurnal;Password=Onm5b-1ju; database=ayder2s4_zhurnal");
 
         public void openConnection()
         {
-            if(connection.State == System.Data.ConnectionState.Closed)
-                connection.Open();
+            if(Connection.State == System.Data.ConnectionState.Closed)
+                Connection.Open();
 
         }
 
         public void closeConnection()
         {
-            if (connection.State == System.Data.ConnectionState.Open)
-                connection.Close();
+            if (Connection.State == System.Data.ConnectionState.Open)
+                Connection.Close();
         }
 
         public MySqlConnection getConnection()
         {
-            return connection;
+            return Connection;
         }
 
     }

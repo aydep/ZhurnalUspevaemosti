@@ -1,0 +1,34 @@
+﻿<Window x:Class="ZhurnalUspevaemosti.AdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZhurnalUspevaemosti"
+        mc:Ignorable="d"
+        Title="AdminWindow" MinWidth="800" MinHeight="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="12*"/>
+        </Grid.RowDefinitions>
+        <Border Background="#8259C8">
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <Image x:Name="user_avatar" Source="../img/avatars/default_avatar.png" Width="30" VerticalAlignment="Center" Margin="10,0,0,0" Cursor="Hand"/>
+                <TextBlock x:Name="user_name" Text="Мурахас А." VerticalAlignment="Center" Margin="20,0,-10,0" Style="{StaticResource MaterialDesignHeadline6TextBlock}" FontSize="16" FontWeight="Normal"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Background="#A384DD">
+            <StackPanel>
+                <Button x:Name="journalButton" Margin="10" Content="Журнал" Click="journalButton_Click"/>
+                <Button x:Name="statisticButton" Margin="10" Content="Статистика"/>
+                <Button x:Name="addButton" Margin="10" Content="Добавление"/>
+                <Button x:Name="exitButton" Margin="10" Content="Выход" VerticalAlignment="Bottom" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Click="exitButton_Click"/>
+            </StackPanel>
+        </Border>
+        <Frame x:Name="mainFrame" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

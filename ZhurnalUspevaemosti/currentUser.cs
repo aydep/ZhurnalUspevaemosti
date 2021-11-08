@@ -12,6 +12,5 @@ namespace ZhurnalUspevaemosti
         public static string Surename;
         public static string Role;
         public static int Id;
-        public static int ClassId;
     }
 }

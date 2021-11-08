@@ -18,14 +18,16 @@ using System.Data;
 namespace ZhurnalUspevaemosti
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AuthWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AuthWindow : Window
     {
-        public MainWindow()
+        public AuthWindow()
         {
             InitializeComponent();
         }
+
+        AdminWindow admWin;
 
         private void button_Sign_Click(object sender, RoutedEventArgs e)
         {
@@ -78,14 +80,12 @@ namespace ZhurnalUspevaemosti
                 }
 
                 //Формирование запоса
-                MySqlCommand command = new MySqlCommand($"SELECT * FROM ayder2s4_zhurnal.{currentUser.Role} WHERE `login` = @uL AND `password` = @uP", db.getConnection());
+                MySqlCommand command = new MySqlCommand($"SELECT * FROM ayder2s4_zhurnal.{currentUser.Role} WHERE `login` = @uL AND `password` = @uP;", db.getConnection());
                 command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;
                 command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = Pass;
 
-                
-
                 db.openConnection();//Открытие подключения к БД
-                MessageBox.Show(roleBox.Text);
+
                 adapter.SelectCommand = command;
                 adapter.Fill(Table);
 
@@ -94,19 +94,33 @@ namespace ZhurnalUspevaemosti
                     currentUser.Name = Table.Rows[0][2].ToString();
                     currentUser.Surename = Table.Rows[0][3].ToString();
                     currentUser.Id = int.Parse(Table.Rows[0][0].ToString());
-                    currentUser.ClassId = int.Parse(Table.Rows[0][1].ToString());
+
+                    switch (currentUser.Role)
+                    {
+                        case "Admins":
+                            admWin = new AdminWindow();
+                            admWin.Show();
+                            break;
+
+                        case "Teachers":
+                            break;
+
+                        case "Students":
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     this.Close();
-                    MessageBox.Show("Yes " + currentUser.Name + " " + currentUser.Surename + " " + currentUser.Role + " " + currentUser.Id);
                 }
                 else
                 {
-                    MessageBox.Show("No");
+                    MessageBox.Show("Проверьте корректность данных!");
 
                 }
 
                 db.closeConnection();//Закрытие подключения к БД
-
 
                 //MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `Login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
                 //command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;

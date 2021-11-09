@@ -33,7 +33,12 @@ namespace ZhurnalUspevaemosti
 
         private void journalButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            mainFrame.Navigate(new journalPage());
+        }
+
+        private void addButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Navigate(new addingPage());
         }
     }
 }

@@ -4,24 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZhurnalUspevaemosti"
-        mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
         Title="Журнал успеваемости : Вход" Height="450" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid Background="#ECECEC">
-        <Border MinWidth="400" Margin="15" Background="White" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="10">
+    <Grid Background="#E3EBEB">
+        <Border MinWidth="400" Margin="15" Background="White" VerticalAlignment="Center" Padding="30" MaxWidth="550" CornerRadius="0">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0"/>
+                
             </Border.Effect>
             <StackPanel>
                 <TextBlock Text="Привет" FontSize="30" FontWeight="Bold" Margin="0 0 0 20"/>
-                <ComboBox x:Name="roleBox" materialDesign:HintAssist.Hint="Выберите роль" Style="{StaticResource MaterialDesignComboBox}">
+                <ComboBox x:Name="roleBox" Margin="0,0,0,15">
                     <ComboBoxItem Content="Ученик"/>
                     <ComboBoxItem Content="Учитель"/>
                     <ComboBoxItem Content="Администратор"/>
                 </ComboBox>
-                <TextBox x:Name="loginTextBox" materialDesign:HintAssist.Hint="Введите логин" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-                <PasswordBox x:Name="passwordBox" materialDesign:HintAssist.Hint="Введите пароль" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"/>
-                <Button Content="Войти" Margin="0 20" Click="button_Sign_Click"/>
+                <TextBox x:Name="loginTextBox" Margin="0,0,0,15"/>
+                <PasswordBox x:Name="passwordBox" Margin="0,0,0,15"/>
+                <Button Content="Войти" Margin="0 20" materialDesign:ButtonAssist.CornerRadius="0" Click="button_Sign_Click"/>
             </StackPanel>
         </Border>
     </Grid>

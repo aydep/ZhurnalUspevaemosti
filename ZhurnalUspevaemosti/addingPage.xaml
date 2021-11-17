@@ -1,0 +1,46 @@
+﻿<Page x:Class="ZhurnalUspevaemosti.addingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:ZhurnalUspevaemosti"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="addingPage"
+      Background="Transparent">
+    <Grid x:Name="grid">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <!--<StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Добавить:" VerticalAlignment="Center" Margin="10, 0, 10, 0" FontSize="16"/>
+            <ComboBox x:Name="objectComboBox" Width="250" Padding="10,10,10,5" FontSize="16" LostFocus="objectComboBox_LostFocus">
+                <ComboBoxItem Content="Ученика"/>
+                <ComboBoxItem Content="Учителя"/>
+                <ComboBoxItem Content="Администратора"/>
+                <ComboBoxItem Content="Предмет"/>
+            </ComboBox>
+        </StackPanel>-->
+
+        <Frame Grid.Row="2" x:Name="addingPageFrame" NavigationUIVisibility="Hidden">
+            <Frame.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0" Direction="270"/>
+            </Frame.Effect>
+        </Frame>
+        <StackPanel x:Name="stak" Orientation="Horizontal" HorizontalAlignment="Left" Background="White" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}">
+            <RadioButton x:Name="studentRadioButton" Content="Ученик" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="studentRadioButton_Checked"/>
+            <RadioButton x:Name="teacherRadioButton" Content="Учитель" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="teacherRadioButton_Checked" />
+            <RadioButton x:Name="adminRadioButton" Content="Администратор" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
+            <RadioButton x:Name="subjectRadioButton" Content="Предмет" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
+            <RadioButton x:Name="classRadioButton" Content="Класс" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
+
+            <StackPanel.Effect>
+                <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0" Direction="270"/>
+            </StackPanel.Effect>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -25,6 +25,8 @@ namespace ZhurnalUspevaemosti
         public AuthWindow()
         {
             InitializeComponent();
+            DB dlb = new DB();
+            dlb.closeConnection();
         }
 
         AdminWindow admWin;

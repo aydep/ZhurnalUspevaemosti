@@ -36,7 +36,7 @@ namespace ZhurnalUspevaemosti
 
             for (int i = 0; i < classesTable.Rows.Count; i++)
             {
-                classComboBox.Items.Add(classesTable.Rows[i][1]);
+                classComboBox.Items.Add(classesTable.Rows[i][0]);
             }
 
             

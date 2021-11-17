@@ -13,5 +13,9 @@ namespace ZhurnalUspevaemosti
     /// </summary>
     public partial class App : Application
     {
+        private void toggleButton_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

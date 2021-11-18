@@ -31,7 +31,7 @@
         <TextBox x:Name="loginTextBox" materialDesign:HintAssist.Hint="Логин" Grid.Row="4" Width="230" Height="50" Padding="10,12" FontSize="18"/>
         <PasswordBox x:Name="passwordBox1" materialDesign:HintAssist.Hint="Пароль" Grid.Row="5" Width="230" Height="50" Padding="10,12" FontSize="18"/>
         <PasswordBox x:Name="passwordBox2" materialDesign:HintAssist.Hint="Повторите пароль" Grid.Row="6" Width="230" Height="50" Padding="10,12" FontSize="18"/>
-        <Button Grid.Row="7" Width="300" Content="Зарегестрировать" Foreground="White" BorderBrush="Transparent"/>
+        <Button Grid.Row="7" Width="300" Content="Зарегестрировать" Foreground="White" BorderBrush="Transparent" Click="Button_Click"/>
 
     </Grid>
 </Page>

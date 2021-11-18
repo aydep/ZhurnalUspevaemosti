@@ -13,6 +13,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.8*"/>
             <RowDefinition Height="10*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="5">
@@ -25,8 +26,28 @@
 
             <Button x:Name="showButton" Content="Показать" Height="45" Margin="10,0,10,0" VerticalAlignment="Center" Click="showButton_Click"/>
         </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="5">
+            <TextBlock Text="Добаить оценку:" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
+            <ComboBox x:Name="classScoreComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16" LostFocus="classScoreComboBox_LostFocus"/>
+            <ComboBox x:Name="studentScoreComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16"/>
+            <TextBox x:Name="lessonTextBox" Width="130" Margin="10,0,0,0" Style="{DynamicResource MaterialDesignTextBox}"/>
+            <ComboBox x:Name="ScoreComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16" Style="{DynamicResource MaterialDesignComboBox}">
+                <ComboBoxItem Content="1"/>
+                <ComboBoxItem Content="2"/>
+                <ComboBoxItem Content="3"/>
+                <ComboBoxItem Content="4"/>
+                <ComboBoxItem Content="5"/>
+            </ComboBox>
+            <ComboBox x:Name="subjectScoreComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16">
+                <ComboBoxItem Content="English"/>
+                <ComboBoxItem Content="Math"/>
+            </ComboBox>
+
+            <Button x:Name="scoreAddButton" Content="Добавить" Height="45" Margin="10,0,10,0" VerticalAlignment="Center" Click="scoreAddButton_Click"/>
+        </StackPanel>
             
-        <DataGrid Grid.Row="1" x:Name="dataGrid" AutoGenerateColumns="True" IsSynchronizedWithCurrentItem="False" ItemsSource="{Binding}" IsReadOnly="True"></DataGrid>
+        <DataGrid Grid.Row="1" FontSize="16" x:Name="dataGrid" AutoGenerateColumns="True" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding}" IsReadOnly="True"></DataGrid>
             
     </Grid>
 </Page>

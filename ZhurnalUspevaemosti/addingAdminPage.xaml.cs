@@ -27,9 +27,6 @@ namespace ZhurnalUspevaemosti
             InitializeComponent();
         }
 
-        DB db = new DB();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string Login = loginTextBox.Text.Trim();
@@ -40,10 +37,9 @@ namespace ZhurnalUspevaemosti
 
             DataTable table = new DataTable();
 
-            MySqlCommand loginCommand = new MySqlCommand($"SELECT `login` FROM Admins WHERE login='{Login}'", db.getConnection());
+            SQLCommands sqlCmds = new SQLCommands();
 
-            adapter.SelectCommand = loginCommand;
-            adapter.Fill(table);
+            sqlCmds.selectCmd(table, $"SELECT `login` FROM Admins WHERE login='{Login}'");
 
             if (nameTextBox.Text == "" || surnameTextBox.Text == "" || loginTextBox.Text == "" || passwordBox1.Password == "" || passwordBox2.Password == "") //Проверка корректности данных
             {
@@ -67,11 +63,7 @@ namespace ZhurnalUspevaemosti
             }
             else
             {
-                MySqlCommand command = new MySqlCommand($"INSERT INTO `Admins` (`name`, `surname`, `avatar`, `login`, `password`) VALUES ('{name}', '{surname}', '', '{Login}', '{Pass1}')", db.getConnection());
-
-                db.openConnection();
-                command.ExecuteNonQuery();
-                db.closeConnection();
+                sqlCmds.insertCmd($"INSERT INTO `Admins` (`name`, `surname`, `avatar`, `login`, `password`) VALUES ('{name}', '{surname}', '', '{Login}', '{Pass1}')");
 
                 MessageBox.Show("Администратор успешно добавлен!");
             }

@@ -38,7 +38,8 @@
                 <Button x:Name="journalButton" Grid.Row="1" Content="Журнал" Click="journalButton_Click" Style="{DynamicResource cdSideButton}"/>
                 <Button x:Name="statisticButton" Grid.Row="2" Content="Статистика" Style="{DynamicResource cdSideButton}"/>
                 <Button x:Name="addButton" Grid.Row="3" Content="Добавление" Click="addButton_Click" Style="{DynamicResource cdSideButton}"/>
-                <Button x:Name="exitButton" Grid.Row="4" Content="Выйти" Click="exitButton_Click" FontFamily="/ZhurnalUspevaemosti;component/Resources/#Google Sans" Style="{DynamicResource cdSideButton}" />
+                <Button x:Name="exitButton" Grid.Row="5" Content="Выйти" Click="exitButton_Click" FontFamily="/ZhurnalUspevaemosti;component/Resources/#Google Sans" Style="{DynamicResource cdSideButton}" />
+                <Button x:Name="deleteButton" Grid.Row="4" Content="Удаление" Click="deleteButton_Click" Style="{DynamicResource cdSideButton}" />
                 
             </Grid>
         </Border>

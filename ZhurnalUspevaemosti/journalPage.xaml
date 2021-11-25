@@ -20,15 +20,12 @@
         <StackPanel Orientation="Horizontal" Margin="5">
             <TextBlock Text="Показать:" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="classComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16"/>
-            <ComboBox x:Name="subjectComboBox" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16">
-                <ComboBoxItem Content="English"/>
-                <ComboBoxItem Content="Math"/>
-            </ComboBox>
+            <ComboBox x:Name="subjectComboBox" Width="130" Style="{DynamicResource MaterialDesignComboBox}" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16"/>
 
             <Button x:Name="showButton" Content="Показать" Height="45" Margin="10,0,10,0" VerticalAlignment="Center" Click="showButton_Click"/>
         </StackPanel>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="5">
+        <StackPanel x:Name="addingScorePannel" Orientation="Horizontal" Grid.Row="2" Margin="5">
             <TextBlock Text="Добаить оценку:" FontSize="16" Margin="10,0,10,0" VerticalAlignment="Center"/>
             <ComboBox x:Name="classScoreComboBox" materialDesign:HintAssist.Hint="Класс" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16" LostFocus="classScoreComboBox_LostFocus"/>
             <ComboBox x:Name="studentScoreComboBox" materialDesign:HintAssist.Hint="Ученик" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16"/>
@@ -49,10 +46,7 @@
                 <ComboBoxItem Content="4"/>
                 <ComboBoxItem Content="5"/>
             </ComboBox>
-            <ComboBox x:Name="subjectScoreComboBox" materialDesign:HintAssist.Hint="Предмет" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16">
-                <ComboBoxItem Content="English"/>
-                <ComboBoxItem Content="Math"/>
-            </ComboBox>
+            <ComboBox x:Name="subjectScoreComboBox" materialDesign:HintAssist.Hint="Предмет" Width="130" HorizontalAlignment="Left" Margin="10,0,0,0" Padding="10,10,10,5" FontSize="16"/>
 
             <Button x:Name="scoreAddButton" Content="Добавить" Height="45" Margin="10,0,10,0" VerticalAlignment="Center" Click="scoreAddButton_Click"/>
         </StackPanel>

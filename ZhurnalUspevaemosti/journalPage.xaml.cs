@@ -21,18 +21,14 @@ namespace ZhurnalUspevaemosti
     /// </summary>
     public partial class journalPage : Page
     {
-        DB db = new DB();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
+        SQLCommands sqlCmds = new SQLCommands();
 
         public journalPage()
         {
             InitializeComponent();
             DataTable classesTable = new DataTable();
 
-            MySqlCommand command = new MySqlCommand("Select * FROM ayder2s4_zhurnal.Classes", db.getConnection());
-
-            adapter.SelectCommand = command;
-            adapter.Fill(classesTable);
+            sqlCmds.selectCmd(classesTable, "Select * FROM ayder2s4_zhurnal.Classes");
 
             for (int i = 0; i < classesTable.Rows.Count; i++)
             {
@@ -40,6 +36,35 @@ namespace ZhurnalUspevaemosti
                 classScoreComboBox.Items.Add(classesTable.Rows[i][0]);
             }
 
+            if (currentUser.Role == "Teachers")
+            {
+                DataTable subjectTable = new DataTable();
+
+                sqlCmds.selectCmd(subjectTable, $"Select teacher_subject FROM Teachers WHERE teacher_id='{currentUser.Id}'");
+
+                for (int i = 0; i < subjectTable.Rows.Count; i++)
+                {
+                    subjectComboBox.Items.Add(subjectTable.Rows[i][0]);
+                    subjectScoreComboBox.Items.Add(subjectTable.Rows[i][0]);
+                }
+            }
+            else
+            {
+                DataTable subjectTable = new DataTable();
+
+                sqlCmds.selectCmd(subjectTable, $"Select * FROM Subjects");
+
+                for (int i = 0; i < subjectTable.Rows.Count; i++)
+                {
+                    subjectComboBox.Items.Add(subjectTable.Rows[i][1]);
+                    subjectScoreComboBox.Items.Add(subjectTable.Rows[i][1]);
+                }
+            }
+
+            if (currentUser.Role == "Student")
+            {
+                addingScorePannel.Visibility = Visibility.Hidden;
+            }
             
         }
 
@@ -55,10 +80,16 @@ namespace ZhurnalUspevaemosti
                 DataTable subjectsTable = new DataTable();
                 DataTable studTable = new DataTable();
 
-
-                MySqlCommand prepare = new MySqlCommand($"SELECT Students.student_id, Students.name FROM Students,Classes WHERE Classes.class_name='{classComboBox.Text}'", db.getConnection());
-                adapter.SelectCommand = prepare;
-                adapter.Fill(studTable);
+                sqlCmds.selectCmd(studTable, $"SELECT Students.student_id, Students.name FROM Students,Classes WHERE Classes.class_name='{classComboBox.Text}'");
+                
+                /*  Пример запроса
+                    SELECT English.date, English.lesson,
+                        MAX(CASE WHEN student_id = 17 THEN score END) AS S1,
+                        MAX(CASE WHEN student_id = 18 THEN score END) AS S2
+                        ...
+                        MAX(CASE WHEN student_id = n  THEN score END) AS Sm,
+                    FROM English GROUP BY English.lesson
+                */
 
                 string preparedCommand = $"SELECT {subjectComboBox.Text}.date, {subjectComboBox.Text}.lesson, ";
 
@@ -70,10 +101,7 @@ namespace ZhurnalUspevaemosti
                 preparedCommand = preparedCommand.Substring(0, preparedCommand.Length - 2);
                 preparedCommand += $" FROM {subjectComboBox.Text} GROUP BY {subjectComboBox.Text}.lesson";
 
-                MySqlCommand command = new MySqlCommand(preparedCommand, db.getConnection());
-
-                adapter.SelectCommand = command;
-                adapter.Fill(subjectsTable);
+                sqlCmds.selectCmd(subjectsTable, preparedCommand);
 
                 dataGrid.DataContext = subjectsTable;
             } else
@@ -93,22 +121,15 @@ namespace ZhurnalUspevaemosti
         private void scoreAddButton_Click(object sender, RoutedEventArgs e)
         {
             String[] student = studentScoreComboBox.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            MySqlCommand command = new MySqlCommand($"INSERT INTO `{subjectScoreComboBox.Text}` (`date`, `lesson`, `student_id`, `score`) VALUES (CURRENT_DATE(), '{lessonComboBox.Text.ToString()}', (SELECT student_id FROM Students WHERE name='{student[1]}' AND surname='{student[0]}'), '{ScoreComboBox.Text}')", db.getConnection());
-            db.openConnection();
-            command.ExecuteNonQuery();
-            db.closeConnection();
-            
+            sqlCmds.insertCmd($"INSERT INTO `{subjectScoreComboBox.Text}` (`date`, `lesson`, `student_id`, `score`) VALUES (CURRENT_DATE(), '{lessonComboBox.Text.ToString()}', (SELECT student_id FROM Students WHERE name='{student[1]}' AND surname='{student[0]}'), '{ScoreComboBox.Text}')");       
         }
 
         private void classScoreComboBox_LostFocus(object sender, RoutedEventArgs e)
         {
             DataTable table = new DataTable();
-            MySqlCommand command = new MySqlCommand($"SELECT DISTINCT name, surname FROM Students WHERE class_name ='{classScoreComboBox.Text}' GROUP BY surname ", db.getConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-
-            //MessageBox.Show(table.ToString());
-
+            
+            sqlCmds.selectCmd(table, $"SELECT DISTINCT name, surname FROM Students WHERE class_name ='{classScoreComboBox.Text}' GROUP BY surname ");
+            
             studentScoreComboBox.Items.Clear();
 
             for (int i = 0; i < table.Rows.Count; i++)

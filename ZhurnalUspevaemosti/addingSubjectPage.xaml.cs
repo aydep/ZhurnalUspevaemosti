@@ -22,29 +22,25 @@ namespace ZhurnalUspevaemosti
     /// </summary>
     public partial class addingSubjectPage : Page
     {
+        SQLCommands sqlCmds = new SQLCommands();
+
         public addingSubjectPage()
         {
             InitializeComponent();
         }
 
-        DB db = new DB();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DataTable table = new DataTable();
 
-            MySqlCommand checkCommands = new MySqlCommand($"SELECT * FROM Subjects WHERE subject_name='{subjectNameTextBox.Text}'", db.getConnection());
-
-            adapter.SelectCommand = checkCommands;
-            adapter.Fill(table);
+            sqlCmds.selectCmd(table, $"SELECT * FROM Subjects WHERE subject_name='{subjectNameTextBox.Text}'");
 
             if (table.Rows.Count == 0)
             {
-                MySqlCommand insertCommand = new MySqlCommand($"INSERT INTO `Subjects` (`subject_name`) VALUES ('{subjectNameTextBox.Text}')", db.getConnection());
-                db.openConnection();
-                insertCommand.ExecuteNonQuery();
-                db.closeConnection();
+                sqlCmds.insertCmd($"INSERT INTO `Subjects` (`subject_name`) VALUES ('{subjectNameTextBox.Text}')");
+                sqlCmds.insertCmd($"CREATE TABLE `ayder2s4_zhurnal`.`{subjectNameTextBox.Text}` (`date` date NOT NULL,`lesson` int(11) NOT NULL,`student_id` int(11) NOT NULL,`score` int(1) NOT NULL) ENGINE = InnoDB DEFAULT CHARSET = utf8; ALTER TABLE `ayder2s4_zhurnal`.`{subjectNameTextBox.Text}` ADD KEY `student_id` (`student_id`); ");
+                sqlCmds.insertCmd($"ALTER TABLE `{subjectNameTextBox.Text}` ADD FOREIGN KEY (`student_id`) REFERENCES `Students`(`student_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;");
+               
             }
             else
             {

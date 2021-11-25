@@ -23,7 +23,21 @@ namespace ZhurnalUspevaemosti
         {
             InitializeComponent();
             user_name.Text = currentUser.Surename + " " + currentUser.Name.Substring(0, 1) + ".";
-            mainFrame.Content = new journalPage();
+            //mainFrame.Content = new journalPage();
+
+            if (currentUser.Role != "Admins")
+            {
+                addButton.Visibility = Visibility.Hidden;
+            }
+
+            if (currentUser.Role == "Students")
+            {
+                mainFrame.Content = new studentJournalPage();
+            }
+            else
+            {
+                mainFrame.Content = new journalPage();
+            }
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e)
@@ -33,12 +47,24 @@ namespace ZhurnalUspevaemosti
 
         private void journalButton_Click(object sender, RoutedEventArgs e)
         {
-            mainFrame.Navigate(new journalPage());
+            if (currentUser.Role == "Students")
+            {
+                mainFrame.Navigate(new studentJournalPage());
+            }
+            else
+            {
+                mainFrame.Navigate(new journalPage());
+            }
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             mainFrame.Navigate(new addingPage());
+        }
+
+        private void deleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainFrame.Navigate(new deletingPage());
         }
     }
 }

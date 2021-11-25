@@ -22,11 +22,11 @@ namespace ZhurnalUspevaemosti
     /// </summary>
     public partial class AuthWindow : Window
     {
+        SQLCommands sqlCmds = new SQLCommands();
+
         public AuthWindow()
         {
             InitializeComponent();
-            DB dlb = new DB();
-            dlb.closeConnection();
         }
 
         AdminWindow admWin;
@@ -56,11 +56,8 @@ namespace ZhurnalUspevaemosti
                 passwordBox.ToolTip = "Слишком коротко";
                 passwordBox.Background = Brushes.IndianRed;
             } else {
-                DB db = new DB(); //Назначение локальной таблицы и адаптера 
 
                 DataTable Table = new DataTable();
-
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
 
                 switch (roleBox.Text) //Назначение роли
                 {
@@ -81,15 +78,8 @@ namespace ZhurnalUspevaemosti
                         break;
                 }
 
-                //Формирование запоса
-                MySqlCommand command = new MySqlCommand($"SELECT * FROM ayder2s4_zhurnal.{currentUser.Role} WHERE `login` = @uL AND `password` = @uP;", db.getConnection());
-                command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;
-                command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = Pass;
-
-                db.openConnection();//Открытие подключения к БД
-
-                adapter.SelectCommand = command;
-                adapter.Fill(Table);
+                //Запрос
+                sqlCmds.selectCmd(Table, $"SELECT * FROM ayder2s4_zhurnal.{currentUser.Role} WHERE `login` = '{Login}' AND `password` = '{Pass}';");
 
                 if (Table.Rows.Count > 0) //Передача данных в класс curentUser и открытие основного окна
                 {
@@ -97,50 +87,16 @@ namespace ZhurnalUspevaemosti
                     currentUser.Surename = Table.Rows[0][3].ToString();
                     currentUser.Id = int.Parse(Table.Rows[0][0].ToString());
 
-                    switch (currentUser.Role)
-                    {
-                        case "Admins":
-                            admWin = new AdminWindow();
-                            admWin.Show();
-                            break;
-
-                        case "Teachers":
-                            break;
-
-                        case "Students":
-                            break;
-
-                        default:
-                            break;
-                    }
+                    admWin = new AdminWindow();
+                    admWin.Show();
 
                     this.Close();
                 }
                 else
                 {
                     MessageBox.Show("Проверьте корректность данных!");
-
                 }
-
-                db.closeConnection();//Закрытие подключения к БД
-
-                //MySqlCommand command = new MySqlCommand("INSERT INTO `users` (`id`, `Login`, `password`, `email`) VALUES (NULL, @uL, @uP, @uE)", db.getConnection()); //Формирование текста запроса
-                //command.Parameters.Add("@uL", MySqlDbType.VarChar).Value = Login;
-                //command.Parameters.Add("@uP", MySqlDbType.VarChar).Value = pass_1;
-                //command.Parameters.Add("@uE", MySqlDbType.VarChar).Value = email;
-
-
-                //if (command.ExecuteNonQuery() == 1)
-                //{
-                //    MessageBox.Show("Yes");
-                //}
-                //else
-                //{
-                //    MessageBox.Show("No");
-                //}
-
             }
         }
-
     }
 }

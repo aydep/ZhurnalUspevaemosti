@@ -26,24 +26,16 @@ namespace ZhurnalUspevaemosti
             InitializeComponent();
         }
 
-        DB db = new DB();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DataTable table = new DataTable();
+            SQLCommands sqlcmds = new SQLCommands();
+            sqlcmds.selectCmd(table ,$"SELECT * FROM Classes WHERE class_name='{classNameTextBox.Text}'");
 
-            MySqlCommand checkCommands = new MySqlCommand($"SELECT * FROM Classes WHERE class_name='{classNameTextBox.Text}'", db.getConnection());
-
-            adapter.SelectCommand = checkCommands;
-            adapter.Fill(table);
 
             if (table.Rows.Count == 0)
             {
-                MySqlCommand insertCommand = new MySqlCommand($"INSERT INTO `Classes` (`class_name`) VALUES ('{classNameTextBox.Text}')", db.getConnection());
-                db.openConnection();
-                insertCommand.ExecuteNonQuery();
-                db.closeConnection();
+                sqlcmds.insertCmd($"INSERT INTO `Classes` (`class_name`) VALUES ('{classNameTextBox.Text}')");
             }
             else
             {

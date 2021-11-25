@@ -107,6 +107,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="deletingPage.xaml.cs">
+      <DependentUpon>deletingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SQLCommands.cs" />
+    <Compile Include="studentJournalPage.xaml.cs">
+      <DependentUpon>studentJournalPage.xaml</DependentUpon>
+    </Compile>
     <Page Include="addingAdminPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,7 +177,15 @@
       <DependentUpon>AuthWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="deletingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="journalPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="studentJournalPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

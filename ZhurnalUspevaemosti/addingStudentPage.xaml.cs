@@ -22,16 +22,15 @@ namespace ZhurnalUspevaemosti
     /// </summary>
     public partial class addingStudentPage : Page
     {
+        SQLCommands sqlCmds = new SQLCommands();
+
         public addingStudentPage()
         {
             InitializeComponent();
             
             DataTable table = new DataTable();
 
-            MySqlCommand command = new MySqlCommand("SELECT `class_name` FROM Classes", db.getConnection());
-
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
+            sqlCmds.selectCmd(table, "SELECT `class_name` FROM Classes");
 
             if (table.Rows.Count < 1)
             {
@@ -46,9 +45,6 @@ namespace ZhurnalUspevaemosti
             }
         }
 
-        DB db = new DB();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             string Login = loginTextBox.Text.Trim(); 
@@ -59,10 +55,7 @@ namespace ZhurnalUspevaemosti
 
             DataTable table = new DataTable();
 
-            MySqlCommand loginCommand = new MySqlCommand($"SELECT `login` FROM Students WHERE login='{Login}'", db.getConnection());
-
-            adapter.SelectCommand = loginCommand;
-            adapter.Fill(table);
+            sqlCmds.selectCmd(table, $"SELECT `login` FROM Students WHERE login='{Login}'");
 
             if (nameTextBox.Text == "" || surnameTextBox.Text == "" || datePicker.SelectedDate.Value.ToString() == "" || classComboBox.Text == "" || loginTextBox.Text == "" || passwordBox1.Password == "" || passwordBox2.Password == "") //Проверка корректности данных
             {
@@ -88,11 +81,7 @@ namespace ZhurnalUspevaemosti
             {
                 string date = datePicker.SelectedDate.Value.Year.ToString() + "." + datePicker.SelectedDate.Value.Month.ToString() + "." + datePicker.SelectedDate.Value.Day.ToString();
 
-                MySqlCommand command = new MySqlCommand($"INSERT INTO `Students` (`class_name`, `name`, `surname`, `birth_date`, `avtar`, `login`, `password`) VALUES ('{classComboBox.Text}', '{name}', '{surname}', '{date}', '', '{Login}', '{Pass1}')", db.getConnection());
-
-                db.openConnection();
-                command.ExecuteNonQuery();
-                db.closeConnection();
+                sqlCmds.insertCmd($"INSERT INTO `Students` (`class_name`, `name`, `surname`, `birth_date`, `avtar`, `login`, `password`) VALUES ('{classComboBox.Text}', '{name}', '{surname}', '{date}', '', '{Login}', '{Pass1}')");
 
                 MessageBox.Show("Ученик успешно добавлен!");
             }

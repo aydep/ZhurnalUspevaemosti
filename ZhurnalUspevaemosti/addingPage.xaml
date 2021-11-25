@@ -34,9 +34,9 @@
         <StackPanel x:Name="stak" Orientation="Horizontal" HorizontalAlignment="Left" Background="White" Width="{Binding ActualWidth, ElementName=grid, Mode=OneWay}">
             <RadioButton x:Name="studentRadioButton" Content="Ученик" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="studentRadioButton_Checked"/>
             <RadioButton x:Name="teacherRadioButton" Content="Учитель" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="teacherRadioButton_Checked" />
-            <RadioButton x:Name="adminRadioButton" Content="Администратор" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
-            <RadioButton x:Name="subjectRadioButton" Content="Предмет" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
-            <RadioButton x:Name="classRadioButton" Content="Класс" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" />
+            <RadioButton x:Name="adminRadioButton" Content="Администратор" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="adminRadioButton_Checked" />
+            <RadioButton x:Name="subjectRadioButton" Content="Предмет" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="subjectRadioButton_Checked" />
+            <RadioButton x:Name="classRadioButton" Content="Класс" Margin="10" Style="{DynamicResource MaterialDesignChoiceChipRadioButton}" FontSize="20" Checked="classRadioButton_Checked" />
 
             <StackPanel.Effect>
                 <DropShadowEffect BlurRadius="30" Color="LightGray" ShadowDepth="0" Direction="270"/>

@@ -107,6 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="addingAdminPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="addingClassPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +123,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="addingSubjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="addingTeacherPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +139,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="addingAdminPage.xaml.cs">
+      <DependentUpon>addingAdminPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="addingClassPage.xaml.cs">
       <DependentUpon>addingClassPage.xaml</DependentUpon>
     </Compile>
@@ -135,6 +150,12 @@
     </Compile>
     <Compile Include="addingStudentPage.xaml.cs">
       <DependentUpon>addingStudentPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="addingSubjectPage.xaml.cs">
+      <DependentUpon>addingSubjectPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="addingTeacherPage.xaml.cs">
+      <DependentUpon>addingTeacherPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="AdminWindow.xaml.cs">
       <DependentUpon>AdminWindow.xaml</DependentUpon>

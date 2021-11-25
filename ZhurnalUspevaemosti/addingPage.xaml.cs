@@ -34,7 +34,22 @@ namespace ZhurnalUspevaemosti
 
         private void teacherRadioButton_Checked(object sender, RoutedEventArgs e)
         {
+            addingPageFrame.Navigate(new addingTeacherPage());
+        }
+
+        private void classRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
             addingPageFrame.Navigate(new addingClassPage());
+        }
+
+        private void adminRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            addingPageFrame.Navigate(new addingAdminPage());
+        }
+
+        private void subjectRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            addingPageFrame.Navigate(new addingSubjectPage());
         }
     }
 }

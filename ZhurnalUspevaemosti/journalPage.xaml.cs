@@ -93,7 +93,7 @@ namespace ZhurnalUspevaemosti
         private void scoreAddButton_Click(object sender, RoutedEventArgs e)
         {
             String[] student = studentScoreComboBox.Text.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            MySqlCommand command = new MySqlCommand($"INSERT INTO `{subjectScoreComboBox.Text}` (`date`, `lesson`, `student_id`, `score`) VALUES (CURRENT_DATE(), '{lessonTextBox.Text}', (SELECT student_id FROM Students WHERE name='{student[1]}' AND surname='{student[0]}'), '{ScoreComboBox.Text}')", db.getConnection());
+            MySqlCommand command = new MySqlCommand($"INSERT INTO `{subjectScoreComboBox.Text}` (`date`, `lesson`, `student_id`, `score`) VALUES (CURRENT_DATE(), '{lessonComboBox.Text.ToString()}', (SELECT student_id FROM Students WHERE name='{student[1]}' AND surname='{student[0]}'), '{ScoreComboBox.Text}')", db.getConnection());
             db.openConnection();
             command.ExecuteNonQuery();
             db.closeConnection();
